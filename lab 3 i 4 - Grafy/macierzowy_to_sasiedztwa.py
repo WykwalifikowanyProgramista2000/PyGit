@@ -1,5 +1,3 @@
-import matplotlib
-import numpy
 
 
 def adjmat_to_adjlist(m: list)->list:
