@@ -1,4 +1,4 @@
-
+from enum import Enum
 
 '''
     0 = biały
@@ -6,18 +6,22 @@
     2 = czarny
 '''
 
+class Col(Enum):
+    WHITE = 0
+    GREY = 1
+    BLACK = 2
 
 
 def BFS(g: list, s: int):
-    color, q = [0]*len(g), [s]
-    color[s] = 1
+    color, q = [Col.WHITE]*len(g), [s]
+    color[s] = Col.GREY
     while q:
         u = q.pop(0)
         for v in g[u]:
-            if color[v] is 0:
-                color[v] = 1
+            if color[v] is Col.WHITE:
+                color[v] = Col.GREY
                 q.append(v)
-        color[u] = 2
+        color[u] = Col.BLACK
 
 
 def dist(start, stop)->int:
@@ -25,16 +29,16 @@ def dist(start, stop)->int:
 
 
 def BFS_neighbours(g: list, s: int, d: int):
-    color, q, nlist = [0]*len(g), [[s, 0]], []
+    color, q, nlist = [Col.WHITE]*len(g), [[s, 0]], []
     while q:
         u = q.pop(0)
         for v in g[u[0]]:
-            if color[v] is 0:
-                color[v] = 1
+            if color[v] is Col.WHITE:
+                color[v] = Col.GREY
                 q.append([v, u[1]+1])
                 if (u[1]+1) <= d:
                     nlist.append(v)
-        color[u[0]] = 2
+        color[u[0]] = Col.BLACK
     return nlist
 
 
