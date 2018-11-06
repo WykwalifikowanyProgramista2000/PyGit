@@ -1,10 +1,5 @@
 from enum import Enum
 
-'''
-    0 = biały
-    1 = szary
-    2 = czarny
-'''
 
 class Col(Enum):
     WHITE = 0
@@ -24,10 +19,6 @@ def BFS(g: list, s: int):
         color[u] = Col.BLACK
 
 
-def dist(start, stop)->int:
-    return stop - start
-
-
 def BFS_neighbours(g: list, s: int, d: int):
     color, q, nlist = [Col.WHITE]*len(g), [[s, 0]], []
     while q:
@@ -42,16 +33,7 @@ def BFS_neighbours(g: list, s: int, d: int):
     return nlist
 
 
-graph_A = [
-    [1, 2, 4],
-    [0, 3, 5],
-    [0, 6],
-    [1],
-    [0, 5],
-    [1, 4],
-    [2]
-]
-
+#  Wierzchołki numerowane są od 0
 graph_B = [
     [1, 3],
     [2],
@@ -62,8 +44,4 @@ graph_B = [
     [0]
 ]
 
-BFS(graph_A, 0)
-x = BFS_neighbours(graph_B, 6, 3)
-y = BFS_neighbours(graph_A, 6, 3)
-print(x)
-print(y)
+print('s = 0, d = 1: {0}\ns = 0, d = 2: {1}'.format(BFS_neighbours(graph_B, 0, 1), BFS_neighbours(graph_B, 0, 2)))

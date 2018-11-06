@@ -1,31 +1,45 @@
 
+def adjmat_to_adjlist(m: list)->list:
+    temp = []
+    for j in range(len(m)):
+        temp.append([])
+        for i in range(len(m)):
+            if m[j][i] > 0:
+                for k in range(m[j][i]):
+                    temp[j].append(i+1)
+    return temp
 
-def dfs(g: list, v: int, visited: list):
+
+matrix = [[0, 1, 0], [0, 0, 1], [1, 2, 0]]
+ans = adjmat_to_adjlist(matrix)
+print(ans)
+
+
+def dfs(g: list, v: int, visited: list)->None:
     visited.append(v)
-    for u in g[v-1]:
+    for u in g[v - 1]:
         if u not in visited:
             dfs(g, u, visited)
 
 
-def acc(g: list, v: int, visited: list):  # funkcja sprawdzająca acykliczność względem danego wierzchołka
+def acc(g: list, v: int, visited: list)->bool:  # funkcja sprawdzająca acykliczność względem danego wierzchołka
     flag = True
     visited.append(v)
-    #print(visited)
-    for c in g[v-1]:
+    for c in g[v - 1]:
         if c in visited:
             flag = False
     if flag is True:
-        for u in g[v-1]:
+        for u in g[v - 1]:
             if u not in visited:
                 return acc(g, u, visited)
         return True
     else:
         return False
 
-# funkcja sprawdzająca acykliczność wszystkich wierzchołków grafu, do momentu znalezienia 'pętli'
-def is_acyclic(g: list):
+
+def is_acyclic(g: list)->bool:  # funkcja sprawdzająca acykliczność wszystkich wierzchołków grafu, do momentu znalezienia 'pętli'
     flag = True
-    for v in range(1, len(g)+1):
+    for v in range(1, len(g) + 1):
         tab = []
         if acc(g, v, tab) is False:
             flag = False
@@ -40,14 +54,14 @@ graph_0 = [
     [1, 6],
     [2, 5],
     [3]
-]# 7 wierzchołków
+]  # 7 wierzchołków
 
 graph_A = [
     [2, 3],
     [],
     [4],
     []
-]# 4 wierzchołki
+]  # 4 wierzchołki
 
 graph_B = [
     [2],
@@ -56,9 +70,8 @@ graph_B = [
 ]
 
 graph_C = [
-    
-]# 3 wierzchołki
 
+]  # 3 wierzchołki
 
 a = [[2, 3], [], [4], []]
 b = [[2], [3], [1]]
