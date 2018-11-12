@@ -26,15 +26,24 @@ def dijkstra(g: nx.MultiDiGraph, s: int, t: int)->str:
         t = prev[t-1][0]
     return ans[0]
 
-def newDijkstra(Graph: nx.MultiDiGraph, start_node: int, target_node: int)->list:
-    totlal_path_lenght = nx.dijkstra_path_length(Graph, start_node, target_node)
-    nodes = nx.dijkstra_path(Graph, start_node, target_node)
-    weights = [nx.dijkstra_path_length(Graph, nodes[n-1], nodes[n], weight='weight') for n in range(1, len(nodes))]
-    ans = [start_node]
-    for i in range(1, len(nodes)):
-        ans = ['{0} -[{1}: {2}]-> {3}'.format(ans[0], 'xd', weights[i-1], nodes[i])]
 
-    return ['{0} (total: {1}'.format(ans[0], totlal_path_lenght)]
+def newDijkstra(Graph: nx.MultiDiGraph, start_node: int, target_node: int)->list:
+    total_path_length = nx.dijkstra_path_length(Graph, start_node, target_node)
+    nodes = nx.dijkstra_path(Graph, start_node, target_node)
+    key_weights = []
+
+    for n in range(len(nodes)):
+        key_weights.append([None, None, None, total_path_length])
+        for u, v, key, weight in Graph.edges(nodes[n], data='weight', keys=True):
+            if n < len(nodes) and v == nodes[n + 1]:
+                if weight < key_weights[n][3]:
+                    key_weights[n] = [u, v, key, weight]
+
+    ans = [start_node]
+    for i in range(len(nodes)-1):
+        ans = ['{0} -[{1}: {2}]-> {3}'.format(ans[0], key_weights[i][2], key_weights[i][3], key_weights[i][1])]
+
+    return ['{0} (total: {1})'.format(ans[0], total_path_length)]
 
 graph_A = nx.MultiDiGraph()
 
@@ -46,4 +55,4 @@ with open("data.dat", "r") as file:
 
 print('My Dijkstra answer: {0}'.format(dijkstra(graph_A, 1, 3)))
 print('Networkx Dijkstra path = {0}, length = {1}'.format(nx.dijkstra_path(graph_A, 1, 3, weight='weight'), nx.dijkstra_path_length(graph_A, 1, 3, weight='weight')))
-print('newDijkstra: {0}'.format(newDijkstra(graph_A, 1, 3)))
+print('newDijkstra: {0}'.format(newDijkstra(graph_A, 1, 3)[0]))
