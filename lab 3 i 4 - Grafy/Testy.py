@@ -35,4 +35,16 @@ for n in range(3):
     lst.append(None)
 print('test', graph_A[1][2][0])
 
-
+print('======================')
+nodes = nx.dijkstra_path(graph_A, 1, 3)
+totlal_path_lenght = nx.dijkstra_path_length(graph_A, 1, 3)
+key_weights = []
+print(nodes)
+for n in range(len(nodes)):
+    key_weights.append([None, totlal_path_lenght])
+    for u, v, key, weight in graph_A.edges(nodes[n], data='weight', keys=True):
+        if n < len(nodes) and v == nodes[n+1]:
+            if weight < key_weights[n][1]:
+                key_weights[n] = [key, weight]
+            print('n: {0}, u: {1}, v: {2}, key: {3}, weight: {4}'.format(n, u, v, key, weight))
+print([n for n in key_weights])

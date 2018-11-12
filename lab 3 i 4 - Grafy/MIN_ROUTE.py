@@ -27,15 +27,14 @@ def dijkstra(g: nx.MultiDiGraph, s: int, t: int)->str:
     return ans[0]
 
 def newDijkstra(Graph: nx.MultiDiGraph, start_node: int, target_node: int)->list:
+    totlal_path_lenght = nx.dijkstra_path_length(Graph, start_node, target_node)
     nodes = nx.dijkstra_path(Graph, start_node, target_node)
     weights = [nx.dijkstra_path_length(Graph, nodes[n-1], nodes[n], weight='weight') for n in range(1, len(nodes))]
-    for n in nodes:
-        for u, v, keys, weight in Graph.edges()
     ans = [start_node]
     for i in range(1, len(nodes)):
         ans = ['{0} -[{1}: {2}]-> {3}'.format(ans[0], 'xd', weights[i-1], nodes[i])]
 
-    return ['{0} (total: {1}'.format(ans[0], nx.dijkstra_path_length(Graph, 1, 3))]
+    return ['{0} (total: {1}'.format(ans[0], totlal_path_lenght)]
 
 graph_A = nx.MultiDiGraph()
 
