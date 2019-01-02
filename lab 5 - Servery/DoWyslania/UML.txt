@@ -1,0 +1,46 @@
+@startuml
+class Product{
++ product_id: str
++ product_price: float
++ __init__(self, product_id: str, product_price: float): None
+}
+
+abstract class Server{
++ {static} limit_of_found_products: int
++ {abstract} __init__(self)
++ {abstract} get_list_from_server(self)
++ find_products(self, letters_in_product_id: int): List[Product]
+}
+
+class ServerList{
++ product_list: List[Product]
++ __init__(self, products_list: List[Product]): None
++ get_list_from_server(self): List[Product]
+}
+
+class ServerDict{
++ product_dict: Dict[str, Product]
++ __init__(self, product_list: List[Products]): None
++ get_list_from_server(self): List[Product]
+}
+
+class Client{
++ server: Server
++ __init__(self): None
++ sum_products_price(self, letters_in_p_id: int): float
+}
+
+class TooManyProductsFoundError{
++ __init__(self, msg: string): None
+}
+
+
+Client o-- Server
+Server <|-- ServerList
+Server <|-- ServerDict
+Server *-- Product
+Server +-- TooManyProductsFoundError 
+
+
+hide empty members
+@enduml
